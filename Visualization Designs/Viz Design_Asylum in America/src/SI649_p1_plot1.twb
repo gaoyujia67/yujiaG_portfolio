@@ -1,0 +1,1004 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20233.23.1227.1336                               -->
+<workbook original-version='18.1' source-build='2023.3.1 (20233.23.1227.1336)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
+    <MapboxVectorStylesAndLayers />
+    <_.fcp.MarkAnimation.true...MarkAnimation />
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
+    <_.fcp.PatternedLineMarks.true...PatternedLineMarks />
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <SortTagCleanup />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <_.fcp.AnimationOnByDefault.false...style>
+    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element='animation'>
+      <_.fcp.AnimationOnByDefault.false...format attr='animation-on' value='ao-on' />
+    </_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule>
+  </_.fcp.AnimationOnByDefault.false...style>
+  <datasources>
+    <datasource caption='granted_asylum_new' inline='true' name='federated.0e5ouaf14xnrck10xar4w1awbl7n' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='granted_asylum_new' name='textscan.175zlai0vaqwi016rg4p30p3ujp4'>
+            <connection class='textscan' directory='D:/aaa硬盘备份/Katrina/大学/2024大四-研一冬季(UM)/SI649/project/p1' filename='granted_asylum_new.csv' password='' server='' />
+          </named-connection>
+        </named-connections>
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='textscan.175zlai0vaqwi016rg4p30p3ujp4' name='granted_asylum_new.csv' table='[granted_asylum_new#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='zh_CN' separator=','>
+            <column datatype='integer' name='Year' ordinal='0' />
+            <column datatype='integer' name='num_refugee' ordinal='1' />
+            <column datatype='integer' name='value' ordinal='2' />
+            <column datatype='string' name='type' ordinal='3' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='textscan.175zlai0vaqwi016rg4p30p3ujp4' name='granted_asylum_new.csv' table='[granted_asylum_new#csv]' type='table'>
+          <columns character-set='UTF-8' header='yes' locale='zh_CN' separator=','>
+            <column datatype='integer' name='Year' ordinal='0' />
+            <column datatype='integer' name='num_refugee' ordinal='1' />
+            <column datatype='integer' name='value' ordinal='2' />
+            <column datatype='string' name='type' ordinal='3' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[granted_asylum_new.csv]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='character-set'>&quot;UTF-8&quot;</attribute>
+              <attribute datatype='string' name='collation'>&quot;zh_Hans_CN&quot;</attribute>
+              <attribute datatype='string' name='currency'>&quot;¥&quot;</attribute>
+              <attribute datatype='string' name='field-delimiter'>&quot;,&quot;</attribute>
+              <attribute datatype='string' name='header-row'>&quot;true&quot;</attribute>
+              <attribute datatype='string' name='locale'>&quot;zh_CN&quot;</attribute>
+              <attribute datatype='string' name='single-char'>&quot;&quot;</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Year</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Year]</local-name>
+            <parent-name>[granted_asylum_new.csv]</parent-name>
+            <remote-alias>Year</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>num_refugee</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[num_refugee]</local-name>
+            <parent-name>[granted_asylum_new.csv]</parent-name>
+            <remote-alias>num_refugee</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>value</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[value]</local-name>
+            <parent-name>[granted_asylum_new.csv]</parent-name>
+            <remote-alias>value</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>type</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[type]</local-name>
+            <parent-name>[granted_asylum_new.csv]</parent-name>
+            <remote-alias>type</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <scale>1</scale>
+            <width>1073741823</width>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='LZH_RCN' />
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column datatype='integer' name='[Year]' role='dimension' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='granted_asylum_new.csv' datatype='table' name='[__tableau_internal_object_id__].[granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F]' role='measure' type='quantitative' />
+      <column caption='Num Refugee' datatype='integer' name='[num_refugee]' role='measure' type='quantitative' />
+      <column caption='Type' datatype='string' name='[type]' role='dimension' type='nominal' />
+      <column caption='Value' datatype='integer' name='[value]' role='measure' type='quantitative' />
+      <column-instance column='[type]' derivation='None' name='[none:type:nk]' pivot='key' type='nominal' />
+      <column-instance column='[num_refugee]' derivation='Sum' name='[sum:num_refugee:qk]' pivot='key' type='quantitative' />
+      <column-instance column='[value]' derivation='Sum' name='[sum:value:qk]' pivot='key' type='quantitative' />
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <style>
+        <style-rule element='mark'>
+          <encoding attr='color' field='[none:type:nk]' type='palette'>
+            <map to='#4e79a7'>
+              <bucket>%null%</bucket>
+            </map>
+            <map to='#5fa2ce'>
+              <bucket>&quot;def&quot;</bucket>
+            </map>
+            <map to='#c8d0d9'>
+              <bucket>&quot;aff&quot;</bucket>
+            </map>
+          </encoding>
+          <encoding attr='color' field='[none:type:nk]&#10;[:Measure Names]' type='palette'>
+            <map to='#5fa2ce'>
+              <multibucket>
+                <bucket>&quot;aff&quot;</bucket>
+                <bucket>&quot;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]&quot;</bucket>
+              </multibucket>
+            </map>
+            <map to='#c8d0d9'>
+              <multibucket>
+                <bucket>&quot;def&quot;</bucket>
+                <bucket>&quot;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]&quot;</bucket>
+              </multibucket>
+            </map>
+            <map to='#f28e2b'>
+              <multibucket>
+                <bucket>&quot;aff&quot;</bucket>
+                <bucket>&quot;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]&quot;</bucket>
+              </multibucket>
+            </map>
+            <map to='#fc7d0b'>
+              <multibucket>
+                <bucket>&quot;def&quot;</bucket>
+                <bucket>&quot;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]&quot;</bucket>
+              </multibucket>
+            </map>
+          </encoding>
+        </style-rule>
+      </style>
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+        <objects>
+          <object caption='granted_asylum_new.csv' id='granted_asylum_new.csv_A7E26384880E413F895665E55C2F855F'>
+            <properties context=''>
+              <relation connection='textscan.175zlai0vaqwi016rg4p30p3ujp4' name='granted_asylum_new.csv' table='[granted_asylum_new#csv]' type='table'>
+                <columns character-set='UTF-8' header='yes' locale='zh_CN' separator=','>
+                  <column datatype='integer' name='Year' ordinal='0' />
+                  <column datatype='integer' name='num_refugee' ordinal='1' />
+                  <column datatype='integer' name='value' ordinal='2' />
+                  <column datatype='string' name='type' ordinal='3' />
+                </columns>
+              </relation>
+            </properties>
+          </object>
+        </objects>
+      </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+    </datasource>
+    <datasource caption='Sheet1 (map_data)' inline='true' name='federated.0kj416q1woyk7h1euv6ye15tic1u' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='map_data' name='excel-direct.14tphpd0mkg9z91dqkacp1xxz13o'>
+            <connection class='excel-direct' cleaning='no' compat='no' dataRefreshTime='' filename='C:/Users/Katrina_gao/Desktop/map_data.xlsx' interpretationMode='0' password='' server='' validate='no' />
+          </named-connection>
+        </named-connections>
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='excel-direct.14tphpd0mkg9z91dqkacp1xxz13o' name='Sheet1' table='[Sheet1$]' type='table'>
+          <columns gridOrigin='A1:D52:no:A1:D52:0' header='yes' outcome='2'>
+            <column datatype='string' name='state abbr' ordinal='0' />
+            <column datatype='string' name='state' ordinal='1' />
+            <column datatype='real' name='Refugee_arrival' ordinal='2' />
+            <column datatype='integer' name='Court_num' ordinal='3' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='excel-direct.14tphpd0mkg9z91dqkacp1xxz13o' name='Sheet1' table='[Sheet1$]' type='table'>
+          <columns gridOrigin='A1:D52:no:A1:D52:0' header='yes' outcome='2'>
+            <column datatype='string' name='state abbr' ordinal='0' />
+            <column datatype='string' name='state' ordinal='1' />
+            <column datatype='real' name='Refugee_arrival' ordinal='2' />
+            <column datatype='integer' name='Court_num' ordinal='3' />
+          </columns>
+        </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
+        <metadata-records>
+          <metadata-record class='capability'>
+            <remote-name />
+            <remote-type>0</remote-type>
+            <parent-name>[Sheet1]</parent-name>
+            <remote-alias />
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='integer' name='context'>0</attribute>
+              <attribute datatype='string' name='gridOrigin'>&quot;A1:D52:no:A1:D52:0&quot;</attribute>
+              <attribute datatype='boolean' name='header'>true</attribute>
+              <attribute datatype='integer' name='outcome'>2</attribute>
+            </attributes>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>state abbr</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[state abbr]</local-name>
+            <parent-name>[Sheet1]</parent-name>
+            <remote-alias>state abbr</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LZH_RCN_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_1015C640682141018829EF4044049CD4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>state</remote-name>
+            <remote-type>130</remote-type>
+            <local-name>[state]</local-name>
+            <parent-name>[Sheet1]</parent-name>
+            <remote-alias>state</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <contains-null>true</contains-null>
+            <collation flag='1' name='LZH_RCN_S2' />
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;WSTR&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_1015C640682141018829EF4044049CD4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Refugee_arrival</remote-name>
+            <remote-type>5</remote-type>
+            <local-name>[Refugee_arrival]</local-name>
+            <parent-name>[Sheet1]</parent-name>
+            <remote-alias>Refugee_arrival</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>real</local-type>
+            <aggregation>Sum</aggregation>
+            <precision>15</precision>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;R8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_1015C640682141018829EF4044049CD4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Court_num</remote-name>
+            <remote-type>20</remote-type>
+            <local-name>[Court_num]</local-name>
+            <parent-name>[Sheet1]</parent-name>
+            <remote-alias>Court_num</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>integer</local-type>
+            <aggregation>Sum</aggregation>
+            <contains-null>true</contains-null>
+            <attributes>
+              <attribute datatype='string' name='DebugRemoteType'>&quot;I8&quot;</attribute>
+            </attributes>
+            <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[Sheet1_1015C640682141018829EF4044049CD4]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Court num' datatype='integer' name='[Court_num]' role='dimension' type='ordinal' />
+      <column caption='Refugee arrival' datatype='real' name='[Refugee_arrival]' role='measure' type='quantitative' />
+      <_.fcp.ObjectModelTableType.true...column caption='Sheet1' datatype='table' name='[__tableau_internal_object_id__].[Sheet1_1015C640682141018829EF4044049CD4]' role='measure' type='quantitative' />
+      <column caption='State Abbr' datatype='string' name='[state abbr]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <column caption='State' datatype='string' name='[state]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+        <objects>
+          <object caption='Sheet1' id='Sheet1_1015C640682141018829EF4044049CD4'>
+            <properties context=''>
+              <relation connection='excel-direct.14tphpd0mkg9z91dqkacp1xxz13o' name='Sheet1' table='[Sheet1$]' type='table'>
+                <columns gridOrigin='A1:D52:no:A1:D52:0' header='yes' outcome='2'>
+                  <column datatype='string' name='state abbr' ordinal='0' />
+                  <column datatype='string' name='state' ordinal='1' />
+                  <column datatype='real' name='Refugee_arrival' ordinal='2' />
+                  <column datatype='integer' name='Court_num' ordinal='3' />
+                </columns>
+              </relation>
+            </properties>
+          </object>
+        </objects>
+      </_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
+    </datasource>
+  </datasources>
+  <mapsources>
+    <mapsource name='Tableau' />
+  </mapsources>
+  <actions>
+    <action caption='Highlight 1 (generated)' name='[Action1_3942215DD6724B7DBDE9104FA6400C12]'>
+      <activation auto-clear='true' type='on-select' />
+      <source type='sheet' worksheet='Refugee Arrivals and Affirmative Asylum Grants by Year' />
+      <command command='tsc:brush'>
+        <param name='field-captions' value='Type,Measure Names' />
+        <param name='target' value='Refugee Arrivals and Affirmative Asylum Grants by Year' />
+      </command>
+    </action>
+  </actions>
+  <worksheets>
+    <worksheet name='Refugee Arrivals and Affirmative Asylum Grants by Year'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontname='Tableau Semibold'>&lt;Sheet Name&gt;</run>
+            <run>Æ&#10;</run>
+            <run fontname='Dubai' fontsize='14'>Fiscal Years 1990 to 2022</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='granted_asylum_new' name='federated.0e5ouaf14xnrck10xar4w1awbl7n' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0e5ouaf14xnrck10xar4w1awbl7n'>
+            <column datatype='integer' name='[Year]' role='dimension' type='quantitative' />
+            <column-instance column='[Year]' derivation='None' name='[none:Year:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[type]' derivation='None' name='[none:type:nk]' pivot='key' type='nominal' />
+            <column caption='Num Refugee' datatype='integer' name='[num_refugee]' role='measure' type='quantitative' />
+            <column-instance column='[num_refugee]' derivation='Sum' name='[sum:num_refugee:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[value]' derivation='Sum' name='[sum:value:qk]' pivot='key' type='quantitative' />
+            <column caption='Type' datatype='string' name='[type]' role='dimension' type='nominal' />
+            <column caption='Value' datatype='integer' name='[value]' role='measure' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='quantitative' column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]' included-values='non-null' />
+          <natural-sort column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]' direction='DESC' />
+          <slices>
+            <column>[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]' field-type='quantitative' major-origin='0' major-spacing='5' scope='cols' type='space' />
+            <encoding attr='space' class='0' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]' field-type='quantitative' fold='true' scope='rows' synchronized='true' type='space' />
+            <format attr='display' class='0' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]' scope='rows' value='false' />
+            <encoding attr='space' class='0' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]' field-type='quantitative' major-origin='0' major-spacing='70000' max='140000' min='0' range-type='fixed' scope='rows' type='space' />
+            <format attr='title' class='0' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]' scope='rows' value='Refugee Statistics' />
+            <format attr='tick-color' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]' value='#000000' />
+          </style-rule>
+          <style-rule element='refline'>
+            <format attr='stroke-size' value='1' />
+            <format attr='stroke-color' value='#00000016' />
+            <format attr='line-visibility' value='on' />
+            <format attr='line-pattern-only' value='solid' />
+          </style-rule>
+          <style-rule element='gridline'>
+            <format attr='stroke-size' value='0' />
+            <format attr='line-visibility' value='off' />
+          </style-rule>
+          <style-rule element='legend-title'>
+            <format attr='text-align' value='left' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='color' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]&#10;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[:Measure Names]' value='Measures' />
+          </style-rule>
+          <style-rule element='axis-title'>
+            <format attr='font-family' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]' value='Dubai' />
+            <format attr='font-weight' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]' value='bold' />
+            <format attr='font-family' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]' value='Dubai' />
+            <format attr='font-weight' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]' value='bold' />
+            <format attr='font-family' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]' value='Dubai' />
+            <format attr='font-weight' field='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]' value='bold' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='3' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <encodings>
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]' />
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[:Measure Names]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='false' />
+                <format attr='mark-labels-mode' value='range' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='1228' />
+                <format attr='maxwidth' value='1228' />
+                <format attr='minheight' value='579' />
+                <format attr='maxheight' value='579' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='4' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Bar' />
+            <encodings>
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]' />
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[:Measure Names]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='false' />
+                <format attr='mark-labels-mode' value='range' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='1228' />
+                <format attr='maxwidth' value='1228' />
+                <format attr='minheight' value='579' />
+                <format attr='maxheight' value='579' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+          <pane id='5' selection-relaxation-option='selection-relaxation-allow' y-axis-name='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Line' />
+            <encodings>
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]' />
+              <color column='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[:Measure Names]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <_.fcp.PatternedLineMarks.true...format attr='mark-line-pattern' value='dashed' />
+                <format attr='mark-labels-cull' value='false' />
+                <format attr='mark-labels-mode' value='range' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='1228' />
+                <format attr='maxwidth' value='1228' />
+                <format attr='minheight' value='579' />
+                <format attr='maxheight' value='579' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>([federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:value:qk] + [federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk])</rows>
+        <cols>[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]</cols>
+      </table>
+      <simple-id uuid='{179062FB-8201-4604-8CFB-DC672A89B5E2}' />
+    </worksheet>
+    <worksheet name='Refugee Population and Immigration Courts in U.S. States'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontname='Tableau Medium' fontsize='17'>&lt;Sheet Name&gt;</run>
+            <run>Æ&#10;</run>
+            <run fontcolor='#000000' fontname='Dubai' fontsize='13'>The refugee population and distribution of immigration courts across U.S. states (mainland) from 2013 to 2023.</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Sheet1 (map_data)' name='federated.0kj416q1woyk7h1euv6ye15tic1u' />
+          </datasources>
+          <mapsources>
+            <mapsource name='Tableau' />
+          </mapsources>
+          <datasource-dependencies datasource='federated.0kj416q1woyk7h1euv6ye15tic1u'>
+            <column caption='Refugee arrival' datatype='real' name='[Refugee_arrival]' role='measure' type='quantitative' />
+            <column-instance column='[state abbr]' derivation='None' name='[none:state abbr:nk]' pivot='key' type='nominal' />
+            <column caption='State Abbr' datatype='string' name='[state abbr]' role='dimension' semantic-role='[State].[Name]' type='nominal' />
+            <column-instance column='[Refugee_arrival]' derivation='Sum' name='[sum:Refugee_arrival:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:state abbr:nk]'>
+            <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:state abbr:nk]' />
+              <groupfilter function='union'>
+                <groupfilter function='member' level='[none:state abbr:nk]' member='&quot;AK&quot;' />
+                <groupfilter function='member' level='[none:state abbr:nk]' member='%null%' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:state abbr:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0kj416q1woyk7h1euv6ye15tic1u].[Longitude (generated)]' field-type='quantitative' max='32694093.000132307' min='25942430.02123794' projection='EPSG:3857' range-type='fixed' scope='cols' type='space' />
+            <encoding attr='space' class='0' field='[federated.0kj416q1woyk7h1euv6ye15tic1u].[Latitude (generated)]' field-type='quantitative' max='6958778.6914356509' min='2836710.7166457623' projection='EPSG:3857' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.0kj416q1woyk7h1euv6ye15tic1u].[sum:Refugee_arrival:qk]' max='43527.0' min='0.0' num-steps='6' palette='red_10_0' type='interpolated' />
+          </style-rule>
+          <style-rule element='legend-title-text'>
+            <format attr='color' field='[federated.0kj416q1woyk7h1euv6ye15tic1u].[sum:Refugee_arrival:qk]' value='Refugee arrivals'>
+              <formatted-text>
+                <run>Refugee arrivals</run>
+              </formatted-text>
+            </format>
+          </style-rule>
+          <style-rule element='map-layer'>
+            <format attr='enabled' id='admin-1-label-9th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-8th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-7th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-6th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-5th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-4th-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-3rd-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-2nd-tier' value='false' />
+            <format attr='enabled' id='admin-1-label-1st-tier' value='false' />
+            <format attr='enabled' id='us-admin-1-label-abbr-3rd-tier' value='false' />
+            <format attr='enabled' id='us-admin-1-label-abbr-2nd-tier' value='false' />
+            <format attr='enabled' id='us-admin-1-label-abbr-1st-tier' value='false' />
+            <format attr='enabled' id='admin-0-boundaries-bg-sub' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-supress-bg' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-sm-parents-bg' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-md-parents-bg' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-lg-parents-bg' value='false' />
+            <format attr='enabled' id='admin-0-boundaries-dispute-sub' value='false' />
+            <format attr='enabled' id='admin-0-boundaries-sub' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-supress' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-sm-parents' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-md-parents' value='false' />
+            <format attr='enabled' id='admin-1-boundaries-lg-parents' value='false' />
+            <format attr='enabled' id='admin1-water-lines-usa-tableau' value='false' />
+            <format attr='enabled' id='9-dash-line-casing' value='false' />
+            <format attr='enabled' id='9-dash-line' value='false' />
+            <format attr='enabled' id='admin-0-label-5th-tier' value='false' />
+            <format attr='enabled' id='admin-0-label-4th-tier' value='false' />
+            <format attr='enabled' id='admin-0-label-3rd-tier' value='false' />
+            <format attr='enabled' id='admin-0-label-2nd-tier' value='false' />
+            <format attr='enabled' id='admin-0-label-1st-tier' value='false' />
+            <format attr='enabled' id='admin-0-boundaries-bg' value='false' />
+            <format attr='enabled' id='admin-0-boundaries' value='false' />
+            <format attr='enabled' id='admin-0-boundaries-dispute' value='false' />
+            <format attr='enabled' id='parks' value='false' />
+            <format attr='enabled' id='landcover_wood' value='false' />
+            <format attr='enabled' id='landcover_scrub' value='false' />
+            <format attr='enabled' id='landcover_grass' value='false' />
+            <format attr='enabled' id='landcover_crop' value='false' />
+            <format attr='enabled' id='background' value='false' />
+            <format attr='enabled' id='barrier_line-land-polygon' value='false' />
+            <format attr='enabled' id='barrier_line-land-line' value='false' />
+            <format attr='enabled' id='national_park' value='false' />
+            <format attr='enabled' id='pitch' value='false' />
+            <format attr='enabled' id='industrial' value='false' />
+            <format attr='enabled' id='built-up-area' value='false' />
+            <format attr='enabled' id='water' value='false' />
+            <format attr='enabled' id='waterway-river-canal' value='false' />
+            <format attr='enabled' id='aeroway-polygon' value='false' />
+            <format attr='enabled' id='aeroway-runway' value='false' />
+            <format attr='enabled' id='aeroway-taxiway' value='false' />
+          </style-rule>
+          <style-rule element='map'>
+            <format attr='washout' value='0.0' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Multipolygon' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <color column='[federated.0kj416q1woyk7h1euv6ye15tic1u].[sum:Refugee_arrival:qk]' />
+              <lod column='[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:state abbr:nk]' />
+              <geometry column='[federated.0kj416q1woyk7h1euv6ye15tic1u].[Geometry (generated)]' />
+            </encodings>
+            <style>
+              <style-rule element='datalabel'>
+                <format attr='color-mode' value='auto' />
+                <format attr='font-size' value='8' />
+                <format attr='font-weight' value='normal' />
+                <format attr='font-family' value='Dubai Light' />
+              </style-rule>
+              <style-rule element='mark'>
+                <format attr='size' value='3.4806630611419678' />
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-mode' value='all' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minheight' value='812' />
+                <format attr='maxheight' value='812' />
+                <format attr='minwidth' value='1330' />
+                <format attr='maxwidth' value='1330' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0kj416q1woyk7h1euv6ye15tic1u].[Latitude (generated)]</rows>
+        <cols>[federated.0kj416q1woyk7h1euv6ye15tic1u].[Longitude (generated)]</cols>
+      </table>
+      <simple-id uuid='{53557938-3D6C-4A5A-9DCF-F6199B8CC412}' />
+    </worksheet>
+  </worksheets>
+  <windows saved-dpi-scale-factor='1.5' source-height='75'>
+    <window class='worksheet' name='Refugee Arrivals and Affirmative Asylum Grants by Year'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='30'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='4' param='[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:type:nk]&#10;[federated.0e5ouaf14xnrck10xar4w1awbl7n].[:Measure Names]' show-title='false' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0e5ouaf14xnrck10xar4w1awbl7n].[none:Year:qk]</field>
+            <field>[federated.0e5ouaf14xnrck10xar4w1awbl7n].[sum:num_refugee:qk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{BC6FA4EA-746B-4FD9-B3AA-C03FE70F118B}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Refugee Population and Immigration Courts in U.S. States'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='30'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0kj416q1woyk7h1euv6ye15tic1u].[sum:Refugee_arrival:qk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:Court_num:ok]</field>
+            <field>[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:state abbr:nk]</field>
+            <field>[federated.0kj416q1woyk7h1euv6ye15tic1u].[none:state:nk]</field>
+            <field>[federated.0kj416q1woyk7h1euv6ye15tic1u].[sum:Refugee_arrival:qk]</field>
+          </color-one-way>
+        </highlight>
+        <default-map-tool-selection tool='1' />
+      </viewpoint>
+      <simple-id uuid='{37D216F7-7A46-4D47-ACDD-12C9C5BF4ED1}' />
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='192' name='Refugee Arrivals and Affirmative Asylum Grants by Year' width='192'>
+      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
+      7f8DgWPoJR5r2RUAAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='Refugee Population and Immigration Courts in U.S. States' width='192'>
+      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
+    </thumbnail>
+  </thumbnails>
+</workbook>
