@@ -1,0 +1,639 @@
+---
+title: "STAT4130J Project"
+author: "Group 6: Tianyi Jiang, Yi Zhou, Yujia Gao"
+date: "2024-07-23"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+library(car)
+library(tidyverse)
+library(gridExtra)
+library(qqtest)
+library(MASS)
+library(olsrr)
+warning(opition=-1)
+```
+
+
+Load dataset. This dataset was downloaded from [Kaggle](https://www.kaggle.com/datasets/hellbuoy/car-price-prediction) and we are interested in finding combinations of parameters that can best predict car prices `price`.
+```{r}
+car_price <- read.csv("CarPrice_Assignment.csv")
+head(car_price)
+```
+
+## Data Cleaning
+
+#### Check Missing Values
+```{r}
+anyNA(car_price)
+```
+
+
+#### Remove Variable according to Prior Knowledge
+```{r}
+# Remove variable according to prior knowledge
+car_price <- subset(car_price, select = -c(car_ID))
+```
+
+#### Transform CarName
+```{r}
+head(unique(car_price$CarName), 20)
+```
+
+```{r}
+car_price$CarName <- sapply(strsplit(car_price$CarName, " "), function(x) x[1])
+unique(car_price$CarName)
+```
+
+```{r}
+car_price$CarName[car_price$CarName == "maxda"] <- "mazda"
+car_price$CarName[car_price$CarName == "nissan"] <- "Nissan"
+car_price$CarName[car_price$CarName == "porcshce"] <- "porsche"
+car_price$CarName[car_price$CarName == "porcshce"] <- "porsche"
+car_price$CarName[car_price$CarName == "toyouta"] <- "toyota"
+car_price$CarName[car_price$CarName == "vokswagen"] <- "volkswagen"
+car_price$CarName[car_price$CarName == "vw"] <- "volkswagen"
+unique(car_price$CarName)
+```
+
+
+
+## Data Exploration
+
+#### Basic Visualization and Analysis
+
+Here is a brief summary of the dataset.
+```{r}
+summary(car_price)
+```
+
+
+First study the distributions of all the variables.
+```{r}
+library(dplyr)
+library(gridExtra)
+p1 <-ggplot(car_price, aes(x=symboling))+geom_bar()
+p2 <- ggplot(car_price, aes(x=CarName))+geom_bar()
+p3 <-ggplot(car_price, aes(x=fueltype))+geom_bar()
+p4 <-ggplot(car_price, aes(x=aspiration))+geom_bar()
+p5 <-ggplot(car_price, aes(x=doornumber))+geom_bar()
+p6 <-ggplot(car_price, aes(x=carbody))+geom_bar()
+p7 <-ggplot(car_price, aes(x=drivewheel))+geom_bar()
+p8 <-ggplot(car_price, aes(x=enginelocation))+geom_bar()
+p9 <-ggplot(car_price, aes(x=wheelbase))+geom_histogram()
+p10 <-ggplot(car_price, aes(x=carlength))+geom_histogram()
+p11 <-ggplot(car_price, aes(x=carwidth))+geom_histogram()
+p12 <-ggplot(car_price, aes(x=carheight))+geom_histogram()
+p13 <-ggplot(car_price, aes(x=curbweight))+geom_histogram()
+p14 <-ggplot(car_price, aes(x=enginetype))+geom_bar()
+p15 <-ggplot(car_price, aes(x=cylindernumber))+geom_bar()
+p16 <-ggplot(car_price, aes(x=enginesize))+geom_histogram()
+p17 <-ggplot(car_price, aes(x=fuelsystem))+geom_bar()
+p18 <-ggplot(car_price, aes(x=boreratio))+geom_histogram()
+p19 <-ggplot(car_price, aes(x=stroke))+geom_histogram()
+p20 <-ggplot(car_price, aes(x=compressionratio))+geom_histogram()
+p21 <-ggplot(car_price, aes(x=horsepower))+geom_histogram()
+p22 <-ggplot(car_price, aes(x=peakrpm))+geom_histogram()
+p23 <-ggplot(car_price, aes(x=citympg))+geom_histogram()
+p24 <-ggplot(car_price, aes(x=highwaympg))+geom_histogram()
+p25 <-ggplot(car_price, aes(x=price))+geom_histogram()
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, 
+             p11, p12, p13, p14, p15, p16, p17, p18, 
+             p19, p20, p21, p22, p23, p24, p25, nrow = 5, ncol = 5)
+```
+
+Many categorical variables are unevenly distributed. Some numeric variables have quite high peaks compared with other values. Therefore, transformation may be needed to make them less extreme in the following model building.
+
+
+Specifically we focused on the response variable *price*.
+```{r}
+ggplot(car_price, aes(x=price))+geom_histogram(aes(y = after_stat(density)), fill = "cyan", color = "black")+geom_density(color = 'red')+
+  labs(title = "Car Price Distribution", x = "Price", y = "Density") +
+  theme_minimal()
+```
+
+From above, the distribution of *price* is clearly non-normal, so later we will perform transformation in the model building part.
+
+```{r}
+ggplot(car_price, aes(x=log(price)))+geom_histogram(aes(y = after_stat(density)), fill = "cyan", color = "black")+geom_density(color = 'red')+
+  labs(title = "Car Price Distribution (after Transformation)", x = "Price", y = "Density") +
+  theme_minimal()
+```
+
+From above, a log transformation can reduce the skewness, which provides a qualitative foundation for the following section.
+
+
+#### Correlation study
+
+```{r}
+# Split the dataset into numeric and categorical one
+car_price_num <- car_price[sapply(car_price, is.numeric)]
+car_price_cat <- car_price[sapply(car_price, function(x) is.factor(x) || is.character(x))]
+car_price_cat$price <- car_price$price
+```
+
+
+First, perform pairwise and correlation scatterplot on the numeric dataset.
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(car_price_num, lower.panel = panel.smooth, upper.panel = panel.cor,
+      gap=0, row1attop=FALSE)
+```
+
+From above, *price* has great correlation with *enginesize*, *curbweight*, *horsepower*, *carwidth*, *highwaympg*, and relatively high correlation with *citympg*, *carlength*, *wheelbase* and *boreratio*. Some variables show high collinearity, including
+1. *highwaympg*: with *citympg*, *horsepower*, *curbweight*, *carlength*, *carwidth*, and *enginesize*.
+2. *citympg*: with *horsepower*, *curbweight*, *carlength*, *enginesize*, *carwidth*.
+3. *horsepower*: with *enginesize*, *curbweight*, *carwidth*.
+4. *boreratio*: with *curbweight*, *carlength*.
+5. *curbweight*: with *carlength*, *carwidth*, *wheelbase*.
+6. *carwidth*: with *carlength*, *wheelbase*.
+7. *carlength*: with *wheelbase*.
+
+
+Then perform boxplot on categorical dataset.
+```{r}
+pbox_1 <-ggplot(car_price_cat, aes(x=CarName, y=price))+geom_boxplot()
+pbox_2 <- ggplot(car_price, aes(x=fueltype, y=price))+geom_boxplot()
+pbox_3 <-ggplot(car_price, aes(x=aspiration, y=price))+geom_boxplot()
+pbox_4 <-ggplot(car_price, aes(x=doornumber, y=price))+geom_boxplot()
+pbox_5 <-ggplot(car_price, aes(x=carbody, y=price))+geom_boxplot()
+pbox_6 <-ggplot(car_price, aes(x=drivewheel, y=price))+geom_boxplot()
+pbox_7 <-ggplot(car_price, aes(x=enginelocation, y=price))+geom_boxplot()
+pbox_8 <-ggplot(car_price, aes(x=enginetype, y=price))+geom_boxplot()
+pbox_9 <-ggplot(car_price, aes(x=cylindernumber, y=price))+geom_boxplot()
+pbox_10 <-ggplot(car_price, aes(x=fuelsystem, y=price))+geom_boxplot()
+
+grid.arrange(pbox_1, pbox_2, pbox_3, pbox_4, pbox_5, pbox_6, pbox_7, pbox_8, pbox_9, pbox_10, 
+            nrow = 4, ncol = 3)
+```
+
+For *CarName*, *enginetype*, *cylindernumber*, prices differ a lot due to different brands and different design strategies (maybe);
+for *fueltype*, prices of $diesel$ seem higher than $gas$;
+for *aspiration*, prices of $turbo$ seem higher than $std$;
+for *carbody*, prices also exhibit different distributions;
+for *drivewheel*, prices of $rwd$ seem higher than others;
+for *enginelocation*, prices of $rear$ is higher than $front$, but the samples with $rear$ are too few, so this variable is neglected;
+for other categorical variables, prices don't show obvious difference.
+Therefore, in the following sections, we chose to focus on categorical variables: *CarName*, *enginetype*, *cylindernumber*, *fueltype*, *aspiration*, *carbody*, *drivewheel*.
+
+
+#### Interaction Study
+
+Then we drew some multi-panel plot to see interactions between numeric and categorical variables. We chose three numeric variables that we are interested in: *highwaympg*, *horsepower*, *carwidth*.
+
+```{r}
+# Start with the numeric predictor: highwaympg
+ggplot(car_price, aes(x = highwaympg, y = price)) + geom_point(cex=0.7) + facet_grid(enginetype~drivewheel)+
+  geom_smooth(method = 'lm') + labs(x="Highway Mpg", y="Price")
+```
+Interaction: *highwaympg* and *enginetype*, *highwaympg* and *drivewheel*.
+
+
+```{r}
+ggplot(car_price, aes(x = highwaympg, y = price)) + geom_point(cex=0.7) + facet_grid(cylindernumber~aspiration)+
+  geom_smooth(method = 'lm') + labs(x="Highway Mpg", y="Price")
+```
+Interaction: *highwaympg* and *cylindernumber*.
+
+
+```{r}
+ggplot(car_price, aes(x = highwaympg, y = price)) + geom_point(cex=0.7) + facet_grid(fueltype~carbody)+
+  geom_smooth(method = 'lm') + labs(x="Highway Mpg", y="Price")
+```
+Interaction: *highwaympg* and *carbody*, *highwaympg* and *aspiration*.
+
+
+```{r}
+# Then with the predictor: horsepower
+ggplot(car_price, aes(x = horsepower, y = price)) + geom_point(cex=0.7) + facet_grid(enginetype~drivewheel)+
+  geom_smooth(method = 'lm') + labs(x="Horsepower", y="Price")
+```
+Interaction: *horsepower* and *enginetype*, *horsepower* and *drivewheel*.
+
+
+```{r}
+ggplot(car_price, aes(x = horsepower, y = price)) + geom_point(cex=0.7) + facet_grid(cylindernumber~aspiration)+
+  geom_smooth(method = 'lm') + labs(x="Horsepower", y="Price")
+```
+Interaction: *horsepower* and *cylindernumber*, *horsepower* and *aspiration*.
+
+
+```{r}
+ggplot(car_price, aes(x = horsepower, y = price)) + geom_point(cex=0.7) + facet_grid(carbody ~ fueltype)+
+  geom_smooth(method = 'lm') + labs(x="Horsepower", y="Price")
+```
+Interaction: *horsepower* and *carbody*, *horsepower* and *fueltype*.
+
+
+```{r}
+# Then with the predictor: carlength
+ggplot(car_price, aes(x = carlength, y = price)) + geom_point(cex=0.7) + facet_grid(enginetype~drivewheel)+
+  geom_smooth(method = 'lm') + labs(x="Car Length", y="Price")
+```
+Interaction: *carlength* and *drivewheel*.
+
+
+```{r}
+ggplot(car_price, aes(x = carlength, y = price)) + geom_point(cex=0.7) + facet_grid(cylindernumber~aspiration) + geom_smooth(method = 'lm') + labs(x="Car Length", y="Price")
+```
+Interaction: none.
+
+
+```{r}
+ggplot(car_price, aes(x = carlength, y = price)) + geom_point(cex=0.7) + facet_grid(carbody ~ fueltype)+
+  geom_smooth(method = 'lm') + labs(x="Car Length", y="Price")
+```
+Interaction: none.
+
+
+Then we studied the relationship between categorical variables: *CarName*, *enginetype*, *cylindernumber*, *fueltype*, *aspiration*, *carbody*, *drivewheel*.
+
+```{r}
+ggplot(car_price, aes(x = fueltype, y = price, color = carbody)) + geom_boxplot() + labs(x="Fuel Type", y="Price")
+```
+Interaction: *fueltype* and *carbody*.
+
+
+```{r}
+ggplot(car_price, aes(x = fueltype, y = price, color = aspiration)) + geom_boxplot()+ labs(x="Fuel Type", y="Price")
+```
+Interaction: *fueltype* and *aspiration*.
+
+
+```{r}
+ggplot(car_price, aes(x = enginetype, y = price, color = carbody)) + geom_boxplot()+ labs(x="Engine Type", y="Price")
+```
+Interaction: unclear.
+
+
+```{r}
+ggplot(car_price, aes(x = cylindernumber, y = price, color = carbody)) + geom_boxplot() + labs(x="Cylinder Number", y="Price")
+```
+Interaction: unclear.
+
+
+```{r}
+ggplot(car_price, aes(x = carbody, y = price, color = drivewheel)) + geom_boxplot() + labs(x="Car Body", y="Price")
+```
+Interaction: *carbody* and *drivewheel*.
+
+
+```{r}
+ggplot(car_price, aes(x = drivewheel, y = price, color = aspiration)) + geom_boxplot() + labs(x="Drive Wheel", y="Price")
+```
+Interaction: none.
+
+
+```{r}
+ggplot(car_price, aes(x = cylindernumber, y = price, color = fueltype)) + geom_boxplot() + labs(x="Cylinder Number", y="Price")
+```
+Interaction: *cylindernumber* and *fueltype*.
+
+
+```{r}
+ggplot(car_price, aes(x = aspiration, y = price, color = enginetype)) + geom_boxplot()+ labs(x="Aspiration", y="Price")
+```
+Interaction: unclear.
+
+
+## Model Building
+
+#### Transformation for Response Variable
+
+First, train data and test data are divided for future validation.
+
+```{r}
+set.seed(0)
+
+# choose 80% of the original dataset as the training data
+train_indices <- sample(1:nrow(car_price), 0.8 * nrow(car_price))
+train_data <- car_price[train_indices, ]
+test_data <- car_price[-train_indices, ]
+```
+
+Based on the histogram for our response variable `price`, it's right-skewed. We got the same result from the below residual plot. Model used here is just a simple one for reference.
+
+```{r}
+fit <- lm(price ~ curbweight + CarName + carheight + 
+    enginelocation + wheelbase + horsepower, data = car_price)
+plot(x = fit1$fitted.values, y = rstudent(fit1), main = "Residuals vs. Fitted Values before Transformation", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+The residual plot shows that residuals are not constant. We then plotted the `boxcox()` plot to determine the power of the response variable. 
+
+```{r}
+boxcox(fit, data=car_price)
+title("Box-Cox Transformation Plot")
+```
+
+From the above figure, $\lambda$ is closer to 0, so the response variable will be transformed to $log(y)$.
+
+```{r}
+fit_new <- lm(log(price) ~ carlength + carwidth + carheight + horsepower + citympg + highwaympg, car_price)
+plot(x = fit2$fitted.values, y = rstudent(fit2), main = "Residuals vs. Fitted Values after Transformation", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+Now the residuals are more evenly scattered across all the fitted values.
+
+#### BIC Model
+
+Firstly, we used the `step()` function for feature transformation. We wanted to get the model that gives the minimum BIC with no interacting parameters. BIC is used as the evaluation criteria here, as we have many potential predictors in the dataset and we want to find the most simpliest model while at the same time can give us good prediction rate.
+
+```{r}
+step(lm(log(price) ~ symboling, data=train_data),
+     scope=(log(price) ~ symboling + CarName + fueltype + aspiration + doornumber + carbody + drivewheel +
+          enginelocation + wheelbase + carlength + carwidth + carheight + curbweight + enginetype +
+          cylindernumber + enginesize + fuelsystem + boreratio + stroke + compressionratio +
+          horsepower + peakrpm + citympg + highwaympg), test="F", direction = "both", k = log(205*0.8), trace = 0)
+```
+
+```{r}
+model1 <- lm(log(price) ~ curbweight + CarName + carheight + enginelocation + wheelbase + horsepower, data = train_data)
+summary(model1)
+```
+
+Identify outliers
+```{r}
+outlier <- which(abs(rstandard(model1)) > 3)
+outlier
+```
+
+Check if the outliers are influential points. `DFFITS` is used to find how much the mean response changes if the $i^{th}$ observation is deleted.
+```{r}
+ols_plot_dffits(model1)
+```
+
+From the above plot, labelled data points are not within the threshold, meaning they are more or less influential to the model. Since datapoint with index 44 is not an influential point, even as an outlier, it will not affact the regression of the model. Therefore, we can just keep it.
+
+
+**Diagnostics**
+
+Check for linearity:
+```{r}
+crPlots(model1, main = "BIC Model Linearity Analysis")
+```
+
+From the above crPlot, all data seems to fit well. Therefore, no more transformation is needed.
+
+```{r}
+plot(x = model1$fitted.values, y = rstudent(model1), main = "Residuals vs. Fitted Values for BIC Model", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+
+```{r}
+vif_value <- vif(model1)
+vif_value
+```
+
+
+Check for collinearity.
+```{r}
+vif(model1)
+```
+
+According to the column "GVIF^(1/(2*Df))", no parameter's vif has exceeded 5, so we conclude that no parameters in our BIC model are closely linearly related.
+
+Check for normality
+```{r}
+qqtest(model1$residuals, cex=0.5, main = "BIC Model Normality Analysis")
+```
+
+Shapiro-Wilk test for normality
+```{r}
+shapiro.test(model1$residuals)
+```
+
+p-value is large, cannot reject the null hypothesis. Therefore data is normally distributed.
+
+
+From the above diagnostic results, it shows that this BIC model satisfies the assumption for linearity, normality, and parameters have unobvious collinearity. The $R^2$ value is 0.95, representing the model has captured most variability of the response variable. Even though the summary table shows that some categories of the predictor `CarName` are not significant, we still think this is a well developed model as this may be due to not enough data points in these sections or some subcategories within a dummy variable are naturally not strongly related to the response variable. As long as the model passes the diagnostic tests, we think it's sufficient. 
+
+**Validation**
+Check R^2 and MSE for tested data
+```{r}
+prediction_log <- predict(model1, newdata = test_data)
+prediction <- exp(prediction_log)
+actuals <- test_data$price
+rss <- sum((prediction - actuals)^2)
+tss <- sum((actuals - mean(actuals))^2)
+r_squared <- 1 - (rss / tss)
+
+# MSE
+mse <- mean((prediction - actuals)^2)
+
+cat("R^2:", r_squared, "\n")
+cat("MSE:", mse, "\n")
+```
+
+BIC model were also validated on the 20% test dataset and the $R^2$ value is still around 0.93, meaning this model was not overfitted.
+
+
+#### Self-chosen Model
+
+We chose five predictors, of which three numerical predictors: `highwaympg`, `horsepower`, and `carlength` are of large correlation with the response variable. From the distribution changes of the boxplot, the rest two categorical data `fueltype` and `carbody` also are closely correlated with the response variable.
+
+```{r}
+model2_orig <- lm(log(price)~ highwaympg+horsepower+carlength+fueltype+carbody, data=train_data)
+summary(model2_orig)
+```
+
+Identify outliers
+```{r}
+outlier <- which(abs(rstandard(model2_orig)) > 3)
+outlier
+```
+
+No outlier.
+
+**Diagnostics**
+
+Check for linearity:
+```{r}
+crPlots(model2_orig, main = "Self-Chosen Model Linearity Analysis")
+```
+
+```{r}
+plot(x = model2_orig$fitted.values, y = rstudent(model2_orig), main = "Residuals vs. Fitted Values for Self-Chosen Model", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+
+Check for collinearity
+```{r}
+vif(model2_orig)
+```
+
+No obvious collinearity are found among predictors.
+
+Check for normality.
+```{r}
+qqtest(model2_orig$residuals, cex=0.5, main = "Self-Chosen Model Normality Analysis")
+```
+
+
+**Validation**
+
+```{r}
+prediction_log <- predict(model2_orig, newdata = test_data)
+prediction <- exp(prediction_log)
+actuals <- test_data$price
+rss <- sum((prediction - actuals)^2)
+tss <- sum((actuals - mean(actuals))^2)
+r_squared <- 1 - (rss / tss)
+
+# MSE
+mse <- mean((prediction - actuals)^2)
+
+cat("R^2:", r_squared, "\n")
+cat("MSE:", mse, "\n")
+```
+
+#### Self-chosen data with parameter transformation
+
+To make the component-residual plot more aligned, we transform two of the variables.
+
+```{r}
+model2_tran <- lm(log(price)~ sqrt(highwaympg)+horsepower+poly(carlength, 2)+fueltype+carbody, data=train_data)
+summary(model2_tran)
+```
+
+Identify outliers
+```{r}
+outlier <- which(abs(rstandard(model2_tran)) > 3)
+outlier
+```
+
+No outlier.
+
+
+**Diagnostics**
+
+Check for linearity.
+```{r}
+crPlots(model2_tran, main = "Self-Chosen Transformed Model Linearity Analysis")
+```
+It indeed becomes better.
+
+```{r}
+plot(x = model2_tran$fitted.values, y = rstudent(model2_tran), main = "Residuals vs. Fitted Values for Self-Chosen Transformed Model", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+
+Check for collinearity.
+```{r}
+vif(model2_tran)
+```
+
+All is smaller than 5, which means no obvious collinearity is found among predictors.
+
+Check for normality.
+```{r}
+qqtest(model2_tran$residuals, cex=0.5, main = "Self-Chosen Transformed Model Normality Analysis")
+```
+
+
+**Validation**
+
+```{r}
+prediction_log <- predict(model2_tran, newdata = test_data)
+prediction <- exp(prediction_log)
+actuals <- test_data$price
+rss <- sum((prediction - actuals)^2)
+tss <- sum((actuals - mean(actuals))^2)
+r_squared <- 1 - (rss / tss)
+
+# MSE
+mse <- mean((prediction - actuals)^2)
+
+cat("R^2:", r_squared, "\n")
+cat("MSE:", mse, "\n")
+```
+
+Anova test for which model is better: the previous non-transformed one or this one. H0 is set to be the original (simpler) one is preferred. HA is set to be the transformed one is better.
+```{r}
+anova(model2_orig, model2_tran)
+```
+
+p-value for F test is small, meaning we can reject the null hypothesis, saying the transformed model is better.
+
+
+#### Self-chosen model with interaction
+
+We are also interested in whether including interactions will give better predictions. Therefore, we used `step()` function to see what interaction pairs should be included. Forward selection was used on the transformed model.
+
+```{r}
+step(lm(log(price)~ sqrt(highwaympg)+horsepower+poly(carlength, 2)+fueltype+carbody, data=train_data),
+     scope=log(price) ~ (sqrt(highwaympg)+horsepower+poly(carlength, 2)+fueltype+carbody)^2,
+     direction="forward", test="F", trace=0)
+```
+
+```{r}
+model2_inter <- lm(formula = log(price) ~ sqrt(highwaympg) + horsepower + poly(carlength, 
+    2) + fueltype + carbody + horsepower:carbody + fueltype:carbody, 
+    data = train_data)
+summary(model2_inter)
+```
+
+**Diagnostics**
+
+Check for normality.
+```{r}
+qqtest(model2_inter$residuals, cex=0.5, main = "Self-Chosen Transformed Model with Ineraction Normality Analysis")
+```
+
+Check for linearity
+```{r}
+plot(x = model2_inter$fitted.values, y = rstudent(model2_inter), main = "Residuals vs. Fitted Values for Self-Chosen Transformed Model with Interaction", xlab = "Fitted values", ylab = "Residuals")
+abline(h = 0, col = "red")
+```
+
+**Validation**
+
+```{r}
+prediction_log <- predict(model2_inter, newdata = test_data)
+prediction <- exp(prediction_log)
+actuals <- test_data$price
+rss <- sum((prediction - actuals)^2)
+tss <- sum((actuals - mean(actuals))^2)
+r_squared <- 1 - (rss / tss)
+
+# MSE
+mse <- mean((prediction - actuals)^2)
+
+cat("R^2:", r_squared, "\n")
+cat("MSE:", mse, "\n")
+```
+ANOVA test for which model is better. H0: model2_tran is preferred. HA: model2_inter is preferred.
+```{r}
+anova(model2_tran, model2_inter)
+```
+
+p-value is smaller than 0.05, meaning we have enough evidence to reject the null hypothesis and claim that after adding interactions, the model performance is better.
+
+#### Result summary
+In this project, we have built four models: **BIC model**, **self-chosen model**, **self-chosen transformed model**, and **self-chosen transformed model with interactions**. The $R^2$ data for their performances on trained and tested dataset are summarized below.
+
+- BIC model:
+  - trained $R^2$: 0.950
+  - tested $R^2$: 0.934
+- Self-chosen model:
+  - trained $R^2$: 0.870
+  - tested $R^2$: 0.835
+- Self-chosen transformed model:
+  - trained $R^2$: 0.879
+  - tested $R^2$:0.882
+- Self-chosen transformed model with interaction:
+  - trained $R^2$: 0.894
+  - tested $R^2$:0.820
