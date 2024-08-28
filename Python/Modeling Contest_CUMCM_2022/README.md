@@ -6,7 +6,8 @@ Type: The Mathematical Contest in Modeling in China. Problem C.
 
 My role:
 
-- Responsible for the Chi-squared test in Problem 1.
+- Responsible for the Chi-squared test in Problem 1, Random Forest Model building in Problem 2;
+- Participated in making inferences from the visualizations and machine learning results;
 - Contributed 70% of writing in the final report.
 
 *In my opinion, the Tech-Communication role in the modeling contest is also vital, even though it may look more inferior than people who did coding and modeling. However, it requires a comprehensive understanding of our model and the methodologies we used to effectively contribute to the report.*
